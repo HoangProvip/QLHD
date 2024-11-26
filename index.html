@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý Hợp đồng</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Quản lý Hợp đồng</h1>
+
+    <!-- Thanh tìm kiếm -->
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Tìm kiếm hợp đồng...">
+      <button class="btn btn-primary" onclick="searchContract()">Tìm kiếm</button>
+    </div>
+
+    <!-- Nút thêm mới -->
+    <div class="actions">
+      <button class="btn btn-success" onclick="openAddModal()">Thêm hợp đồng mới</button>
+    </div>
+
+    <!-- Bảng danh sách hợp đồng -->
+    <table class="contract-table">
+      <thead>
+        <tr>
+          <th>Mã Hợp đồng</th>
+          <th>Tên Sinh viên</th>
+          <th>Phòng</th>
+          <th>Ngày bắt đầu</th>
+          <th>Ngày kết thúc</th>
+          <th>Phí thuê</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody id="contract-list">
+        <!-- Các hàng dữ liệu sẽ được thêm bằng JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal thêm/sửa hợp đồng -->
+  <div class="modal" id="contract-modal">
+    <div class="modal-content">
+      <h2 id="modal-title">Thêm Hợp đồng</h2>
+      <label for="contract-id">Mã Hợp đồng</label>
+      <input type="text" id="contract-id" placeholder="HD001">
+      
+      <label for="student-name">Tên Sinh viên</label>
+      <input type="text" id="student-name" placeholder="Nguyễn Văn A">
+      
+      <label for="room">Phòng</label>
+      <input type="text" id="room" placeholder="101">
+      
+      <label for="start-date">Ngày Bắt đầu</label>
+      <input type="date" id="start-date">
+      
+      <label for="end-date">Ngày Kết thúc</label>
+      <input type="date" id="end-date">
+      
+      <label for="rental-fee">Phí thuê (VNĐ)</label>
+      <input type="number" id="rental-fee" placeholder="2000000">
+      
+      <div class="modal-actions">
+        <button class="btn btn-success" onclick="saveContract()">Lưu</button>
+        <button class="btn btn-secondary" onclick="closeModal()">Hủy</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

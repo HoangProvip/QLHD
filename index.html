@@ -3,68 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý Hợp đồng</title>
+  <title>Quản lý kí túc xá</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Quản lý Hợp đồng</h1>
-
-    <!-- Thanh tìm kiếm -->
-    <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Tìm kiếm hợp đồng...">
-      <button class="btn btn-primary" onclick="searchContract()">Tìm kiếm</button>
+  <div class="main-container">
+    <!-- Thanh danh mục bên trái -->
+    <div class="sidebar">
+      <h2>Quản lý kí túc xá</h2>
+      <ul>
+        <li>
+          <button onclick="showScreen('student')">
+            <i class="fas fa-user"></i> Sinh viên
+          </button>
+        </li>
+        <li>
+          <button onclick="showScreen('room-type')">
+            <i class="fas fa-door-open"></i> Loại phòng
+          </button>
+        </li>
+      </ul>
+      <div class="logo-container">
+        <img src="logo.png" alt="Logo Kí túc xá" />
+      </div>
     </div>
+    <!-- Phần nội dung hiển thị -->
+    <div class="content">
+      <!-- Quản lý Sinh viên -->
+      <div id="student-screen" class="screen">
+        <h1>Quản lý Sinh viên</h1>
+        <div class="search-container">
+          <input type="text" id="search-student" placeholder="Tìm kiếm sinh viên..." oninput="searchStudent()">
+        </div>
+        <button class="btn btn-success" onclick="addStudent()">Thêm Sinh viên</button>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Mã Sinh viên</th>
+              <th>Họ và Tên</th>
+              <th>Ngày sinh</th>
+              <th>Khoa</th>
+              <th>Lớp</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Danh sách sinh viên được render từ script.js -->
+          </tbody>
+        </table>
+      </div>
 
-    <!-- Nút thêm mới -->
-    <div class="actions">
-      <button class="btn btn-success" onclick="openAddModal()">Thêm hợp đồng mới</button>
-    </div>
+      <!-- Modal Thêm Sinh viên -->
+      <div id="add-student-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>Thêm Sinh viên</h2>
+          <form id="add-student-form">
+            <div class="form-group">
+              <label for="student-id">Mã Sinh viên:</label>
+              <input type="text" id="student-id" required>
+            </div>
+            <div class="form-group">
+              <label for="student-name">Họ và Tên:</label>
+              <input type="text" id="student-name" required>
+            </div>
+            <div class="form-group">
+              <label for="student-date">Ngày sinh:</label>
+              <input type="date" id="student-date" required>
+            </div>
+            <div class="form-group">
+              <label for="student-major">Khoa:</label>
+              <input type="text" id="student-major" required>
+            </div>
+            <div class="form-group">
+              <label for="student-room">Lớp:</label>
+              <input type="text" id="student-room" required>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-success" onclick="saveStudent()">Lưu</button>
+              <button type="button" class="btn btn-danger" onclick="closeModal('add-student-modal')">Hủy</button>
+            </div>
+          </form>
+        </div>
+      </div>
 
-    <!-- Bảng danh sách hợp đồng -->
-    <table class="contract-table">
-      <thead>
-        <tr>
-          <th>Mã Hợp đồng</th>
-          <th>Tên Sinh viên</th>
-          <th>Phòng</th>
-          <th>Ngày bắt đầu</th>
-          <th>Ngày kết thúc</th>
-          <th>Phí thuê</th>
-          <th>Hành động</th>
-        </tr>
-      </thead>
-      <tbody id="contract-list">
-        <!-- Các hàng dữ liệu sẽ được thêm bằng JavaScript -->
-      </tbody>
-    </table>
-  </div>
+      <!-- Quản lý Loại phòng -->
+      <div id="room-type-screen" class="screen hidden">
+        <h1>Quản lý Loại Phòng</h1>
+        <div class="search-container">
+          <input type="text" id="search-room" placeholder="Tìm kiếm loại phòng..." oninput="searchRoomType()">
+        </div>
+        <button class="btn btn-success" onclick="addRoomType()">Thêm Loại Phòng</button>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Số phòng</th>
+              <th>Tên Loại phòng</th>
+              <th>Giá thuê (VNĐ)</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Danh sách loại phòng được render từ script.js -->
+          </tbody>
+        </table>
+      </div>
 
-  <!-- Modal thêm/sửa hợp đồng -->
-  <div class="modal" id="contract-modal">
-    <div class="modal-content">
-      <h2 id="modal-title">Thêm Hợp đồng</h2>
-      <label for="contract-id">Mã Hợp đồng</label>
-      <input type="text" id="contract-id" placeholder="HD001">
-      
-      <label for="student-name">Tên Sinh viên</label>
-      <input type="text" id="student-name" placeholder="Nguyễn Văn A">
-      
-      <label for="room">Phòng</label>
-      <input type="text" id="room" placeholder="101">
-      
-      <label for="start-date">Ngày Bắt đầu</label>
-      <input type="date" id="start-date">
-      
-      <label for="end-date">Ngày Kết thúc</label>
-      <input type="date" id="end-date">
-      
-      <label for="rental-fee">Phí thuê (VNĐ)</label>
-      <input type="number" id="rental-fee" placeholder="2000000">
-      
-      <div class="modal-actions">
-        <button class="btn btn-success" onclick="saveContract()">Lưu</button>
-        <button class="btn btn-secondary" onclick="closeModal()">Hủy</button>
+      <!-- Modal Thêm Loại Phòng -->
+      <div id="add-room-type-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>Thêm Loại Phòng</h2>
+          <form id="add-room-type-form">
+            <div class="form-group">
+              <label for="room-type-id">Số phòng:</label>
+              <input type="text" id="room-type-id" required>
+            </div>
+            <div class="form-group">
+              <label for="room-type-name">Tên Loại Phòng:</label>
+              <input type="text" id="room-type-name" required>
+            </div>
+            <div class="form-group">
+              <label for="room-type-price">Giá thuê (VNĐ):</label>
+              <input type="number" id="room-type-price" required>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-success" onclick="saveRoomType()">Lưu</button>
+              <button type="button" class="btn btn-danger" onclick="closeModal('add-room-type-modal')">Hủy</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
